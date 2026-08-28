@@ -1,0 +1,86 @@
+name: Lab_L3_Asy_EVPN
+topology:
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:25.7
+    linux:
+      image: ghcr.io/srl-labs/network-multitool:latest
+  nodes:
+    spine1:
+      kind: nokia_srlinux
+      type: ixr-d3
+    spine2:
+      kind: nokia_srlinux
+      type: ixr-d3
+    leaf1:
+      kind: nokia_srlinux
+      type: ixr-d3
+    leaf2:
+      kind: nokia_srlinux
+      type: ixr-d3
+    leaf3:
+      kind: nokia_srlinux
+      type: ixr-d3
+    Customer200-1:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.200 type vlan id 200
+        - ip link set eth1 up
+        - ip link set eth1.200 up
+        - ip addr add 192.168.200.1/24 broadcast 192.168.200.255 dev eth1.200
+    Customer200-2:
+      kind: linux
+      image: ghcr.io/srl-labs/network-multitool:latest
+      exec:
+        - ip link add link eth1 name eth1.200 type vlan id 200
+        - ip link set eth1 up
+        - ip link set eth1.200 up
+        - ip addr add 192.168.200.2/24 broadcast 192.168.200.255 dev eth1.200
+    Customer200-3:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.200 type vlan id 200
+        - ip link set eth1 up
+        - ip link set eth1.200 up
+        - ip addr add 192.168.200.3/24 broadcast 192.168.200.255 dev eth1.200
+    Customer100-1:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.100 type vlan id 100
+        - ip link set eth1 up
+        - ip link set eth1.100 up
+        - ip addr add 192.168.100.1/24 broadcast 192.168.100.255 dev eth1.100
+    Customer100-2:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.100 type vlan id 100
+        - ip link set eth1 up
+        - ip link set eth1.100 up
+        - ip addr add 192.168.100.2/24 broadcast 192.168.100.255 dev eth1.100
+    Customer100-3:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.100 type vlan id 100
+        - ip link set eth1 up
+        - ip link set eth1.100 up
+        - ip addr add 192.168.100.3/24 broadcast 192.168.100.255 dev eth1.100
+
+  links:
+    # Spine1´s connections
+    - endpoints: [ "spine1:e1-1", "leaf1:e1-1" ]
+    - endpoints: [ "spine1:e1-2", "leaf2:e1-1" ]
+    - endpoints: [ "spine1:e1-3", "leaf3:e1-1" ]
+
+    # Spine2´s connections
+    - endpoints: [ "spine2:e1-1", "leaf1:e1-2" ]
+    - endpoints: [ "spine2:e1-2", "leaf2:e1-2" ]
+    - endpoints: [ "spine2:e1-3", "leaf3:e1-2" ]
+
+    # customer´s connections
+    - endpoints: [ "Customer100-1:eth1", "leaf1:e1-3" ]
+    - endpoints: [ "Customer100-2:eth1", "leaf2:e1-3" ]
+    - endpoints: [ "Customer100-3:eth1", "leaf3:e1-3" ]
+
+    - endpoints: [ "Customer200-1:eth1", "leaf1:e1-4" ]
+    - endpoints: [ "Customer200-2:eth1", "leaf2:e1-4" ]
+    - endpoints: [ "Customer200-3:eth1", "leaf3:e1-4" ]

@@ -6,3 +6,9 @@ Topology:
 
 <img width="1280" height="440" alt="image" src="https://github.com/user-attachments/assets/6df7d654-6f08-49ac-ad12-a91d4d53b6ee" />
 
+
+
+# RFC 9135 - Integrated Routing and Bridging in Ethernet VPN 
+
+Defines two modes of operations for L3 VPN, Symmetric and Asymmetric. SR Linux support both.
+In this lab we configure an L3 VPN with asymmetric routing

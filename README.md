@@ -11,4 +11,8 @@ Topology:
 # RFC 9135 - Integrated Routing and Bridging in Ethernet VPN 
 
 Defines two modes of operations for L3 VPN, Symmetric and Asymmetric. SR Linux support both.
+
 In this lab we configure an L3 VPN with asymmetric routing
+
+
+With an asymmetric L3VPN, we will interconnect fist MAC-VRF "mac-vrf-100" with a second MAC-VRF "mac-vef-200". it initially both MAC-VRF will be independent from each other, providing tenant-isolation.
